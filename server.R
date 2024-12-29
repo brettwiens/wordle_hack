@@ -15,7 +15,7 @@ function(input, output, session) {
   observeEvent(input$submit, {
 
     if (input$skip_used == TRUE){
-      current_word_list <- initial_words[initial_words$word %in% used_list(),]
+      current_word_list <- initial_words[!(initial_words$word %in% tolower(used_list())),]
     } else {
       current_word_list <- initial_words
     }
@@ -47,6 +47,7 @@ function(input, output, session) {
     no_letter <- unlist(strsplit(no_letter, ""))
     
     current_word_list <- letter_analyzer(current_word_list, lock_letters, no_letter, anti_lock_letters)
+    
     current_word_list <- word_score(current_word_list)
 
     output$word_table <- DT::renderDT(current_word_list[order(current_word_list$total_mod_score, decreasing = TRUE), c("word", "total_mod_score")], options = list(pageLength = 10))

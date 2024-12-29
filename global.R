@@ -70,9 +70,9 @@ letter_analyzer <- function(current_word_list, lock_letters, non_letters, anti_l
   
   #if lock_letter_1 is null, then select all rows, same for lock_letter 2-5.  However, if lock_letter_1 has a value, only select those rows where letter_1 is equal to lock_letter_1 and the same for lock_letters 2-5
   if(lock_letters$lock_letter_1 != ''){
-    current_word_list <- start[start$letter_1 == lock_letters$lock_letter_1,]
+    current_word_list <- current_word_list[current_word_list$letter_1 == lock_letters$lock_letter_1,]
   } else {
-    current_word_list <- start
+    current_word_list <- current_word_list
   }
   if(lock_letters$lock_letter_2 != ''){
     current_word_list <- current_word_list[current_word_list$letter_2 == lock_letters$lock_letter_2,]
@@ -99,8 +99,6 @@ letter_analyzer <- function(current_word_list, lock_letters, non_letters, anti_l
   #### ANTI LOCK LETTERS ####
   # if(anti_lock_letters$anti_lock_letter_1 != ''){
   if(length(anti_lock_letters$anti_lock_letter_1) != 0){
-
-    print(current_word_list)
     for (i in 1:length(anti_lock_letters$anti_lock_letter_1)) {
       current_word_list <- current_word_list[current_word_list$letter_1 != anti_lock_letters$anti_lock_letter_1[i] &
                                                (current_word_list$letter_2 == anti_lock_letters$anti_lock_letter_1[i] |
@@ -231,5 +229,6 @@ word_score <- function(possible_words){
   
   return(words_dt)
 }
+
 initial_words <- initial_word_list()
 # word_list <- initial_word_list()
