@@ -1,29 +1,25 @@
 library(shiny)
 
 fluidPage(
-  tags$head(
-    tags$style(HTML("
-      .green-selectize .selectize-input {
-        background-color: limegreen !important;
-        color: white !important;
-        font-weight: bold;
-      }
-    "))
-  ),
+  # Add custom CSS for the green selectizeInput class
+  tags$style(HTML("
+    .green-selectize .selectize-control {
+      background-color: green !important;
+    }
+  ")),
   
   
     # Application title
     titlePanel("Wordle Hack"),
-    
+    br(),
+  hr(),
+  br(),
     column(2, 
            shiny::checkboxInput(inputId = "skip_used", 
                                 label = "Skip used words", 
                                 value = TRUE)),
     column(6,
-           fluidRow(
-             actionButton(inputId = "submit", 
-                          label = "Submit")
-           ),
+           
            fluidRow(
              column(2,
                     shiny::selectizeInput(inputId = "lock_letter_1", 
@@ -75,7 +71,11 @@ fluidPage(
            fluidRow(
              textInput(inputId = "non_letters",
                        label = "Non-Letters *comma separated*",
-                       value = ""))
+                       value = "")),
+           fluidRow(
+             actionButton(inputId = "submit", 
+                          label = "Submit")
+           )
            ),
     column(4,
            img(src = "logo.png", height = 150),
